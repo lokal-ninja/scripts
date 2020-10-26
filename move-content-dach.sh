@@ -1,3 +1,5 @@
+# Move content folders
+# Usage: move-content-dach.sh SRCFOLDER DSTFOLDER
 if [ $# -lt 2 ]; then
   echo 1>&2 "$0: not enough arguments"
   exit 2
