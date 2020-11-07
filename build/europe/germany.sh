@@ -3,4 +3,3 @@ for region in "baden-wuerttemberg" "bayern" "brandenburg" "bremen" "hamburg" "he
   wget "https://download.geofabrik.de/europe/germany/$region-latest.osm.pbf";
   ./pbf2md $region
 done
-

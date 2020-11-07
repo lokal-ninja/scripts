@@ -3,4 +3,3 @@ for region in "alabama" "alaska" "arizona" "arkansas" "california" "colorado" "c
   wget "https://download.geofabrik.de/north-america/us/$region-latest.osm.pbf";
   ./pbf2md $region
 done
-
