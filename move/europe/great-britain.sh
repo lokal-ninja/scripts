@@ -9,7 +9,9 @@ elif [ $# -gt 2 ]; then
 fi
 for region in "england" "scotland" "wales"; do
   rm -rf "$2/europe/great-britain/$region/content/cities";
+  rm -rf "$2/europe/great-britain/$region/content/shops";
   mv "$1/$region/content/cities" "$2/europe/great-britain/$region/content/cities";
+  mv "$1/$region/content/shops" "$2/europe/great-britain/$region/content/shops";
   rm -rf "$2/europe/great-britain/$region/data/cities";
   mv "$1/$region/data/cities" "$2/europe/great-britain/$region/data/cities";
 done

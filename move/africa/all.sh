@@ -9,7 +9,9 @@ elif [ $# -gt 2 ]; then
 fi
 for country in "ghana" "kenya" "liberia" "nigeria" "sierra-leone" "south-africa"; do
   rm -rf "$2/africa/$country/content/cities";
+  rm -rf "$2/africa/$country/content/shops";
   mv "$1/$country/content/cities" "$2/africa/$country/content/cities";
+  mv "$1/$country/content/shops" "$2/africa/$country/content/shops";
   rm -rf "$2/africa/$country/data/cities";
   mv "$1/$country/data/cities" "$2/africa/$country/data/cities";
 done
