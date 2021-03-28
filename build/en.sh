@@ -69,7 +69,7 @@ for region in "england" "scotland" "wales"; do
   rm -rf "$1/$LANG/great-britain/$region/content/shops"
   mv "$region/content/cities" "$1/$LANG/great-britain/$region/content/cities"
   mv "$region/content/shops" "$1/$LANG/great-britain/$region/content/shops"
-  rm -rf "$1/en/great-britain/$region/data/cities"
+  rm -rf "$1/$LANG/great-britain/$region/data/cities"
   mv "$region/data/cities" "$1/$LANG/great-britain/$region/data/cities"
   cd "$1/$LANG/great-britain/$region" && git add -A && git commit -m "update content and data" && git push origin master
   cd $DIR

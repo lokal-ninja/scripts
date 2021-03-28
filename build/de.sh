@@ -51,7 +51,7 @@ for region in "baden-wuerttemberg" "bayern" "brandenburg" "bremen" "hamburg" "he
   rm -rf "$1/$LANG/germany/$region/content/shops"
   mv "$region/content/cities" "$1/$LANG/germany/$region/content/cities"
   mv "$region/content/shops" "$1/$LANG/germany/$region/content/shops"
-  rm -rf "$1/en/germany/$region/data/cities"
+  rm -rf "$1/$LANG/germany/$region/data/cities"
   mv "$region/data/cities" "$1/$LANG/germany/$region/data/cities"
   cd "$1/$LANG/germany/$region" && git add -A && git commit -m "update content and data" && git push origin master
   cd $DIR
