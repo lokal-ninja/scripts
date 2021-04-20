@@ -57,7 +57,7 @@ for region in "alsace" "aquitaine" "auvergne" "basse-normandie" "bourgogne" "bre
   rm -rf "$1/$LANG/france/$region/content/shops"
   mv "$region/content/cities" "$1/$LANG/france/$region/content/cities"
   mv "$region/content/shops" "$1/$LANG/france/$region/content/shops"
-  rm -rf "$1/en/france/$region/data/cities"
+  rm -rf "$1/$LANG/france/$region/data/cities"
   mv "$region/data/cities" "$1/$LANG/france/$region/data/cities"
   cd "$1/$LANG/france/$region" && git add -A && git commit -m "update content and data" && git push origin master
   cd $DIR
