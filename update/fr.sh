@@ -14,4 +14,3 @@ for branch in "bj" "bf" "cg" "cd" "fr" "ga" "gn" "ci" "ml" "mc" "ne" "sn" "tg"; 
   git submodule update --remote --merge && git commit -am "update theme"
   git push origin $branch
 done
-

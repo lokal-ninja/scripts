@@ -14,4 +14,3 @@ for branch in "master" "at" "ch"; do
   git submodule update --remote --merge && git commit -am "update theme"
   git push origin $branch
 done
-

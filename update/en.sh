@@ -14,4 +14,3 @@ for branch in "au" "ca" "gh" "gb" "in" "ie" "ke" "lr" "nz" "ng" "pk" "ph" "sl" "
   git submodule update --remote --merge && git commit -am "update theme"
   git push origin $branch
 done
-
