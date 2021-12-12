@@ -1,3 +1,4 @@
+#!/bin/sh
 # Build, move and deploy all french countries
 # Copy file to your pbf2md folder
 # Usage: ./fr.sh DSTFOLDER (e.g. /countries/)

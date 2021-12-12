@@ -1,3 +1,4 @@
+#!/bin/sh
 # Update website repo of all english countries
 # Copy file to your website repo folder
 

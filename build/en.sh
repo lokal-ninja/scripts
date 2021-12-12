@@ -1,3 +1,4 @@
+#!/bin/sh
 # Build, move and deploy all english countries
 # Copy file to your pbf2md folder
 # Usage: ./en.sh DSTFOLDER (e.g. /countries/)
