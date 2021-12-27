@@ -38,6 +38,8 @@ for country in "austria" "switzerland"; do
   mv "$country/data/cities" "$1/$LANG/$country/data/cities"
   cd "$1/$LANG/$country" && git add -A && git commit -m "update content and data" && git push origin master
   cd $DIR
+  rm -rf "$country"
+  rm "$country-latest.osm.pbf"
 done
 
 # Download, build and move special country regions in
@@ -56,4 +58,7 @@ for region in "baden-wuerttemberg" "bayern" "brandenburg" "bremen" "hamburg" "he
   mv "$region/data/cities" "$1/$LANG/germany/$region/data/cities"
   cd "$1/$LANG/germany/$region" && git add -A && git commit -m "update content and data" && git push origin master
   cd $DIR
+  rm -rf "$region"
+  rm "$region-latest.osm.pbf"
 done
+

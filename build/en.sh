@@ -56,6 +56,8 @@ for country in "ghana" "kenya" "liberia" "nigeria" "sierra-leone" "south-africa"
   mv "$country/data/cities" "$1/$LANG/$country/data/cities"
   cd "$1/$LANG/$country" && git add -A && git commit -m "update content and data" && git push origin master
   cd $DIR
+  rm -rf "$country"
+  rm "$country-latest.osm.pbf"
 done
 
 # Download, build and move special country regions in
@@ -74,6 +76,8 @@ for region in "england" "scotland" "wales"; do
   mv "$region/data/cities" "$1/$LANG/great-britain/$region/data/cities"
   cd "$1/$LANG/great-britain/$region" && git add -A && git commit -m "update content and data" && git push origin master
   cd $DIR
+  rm -rf "$region"
+  rm "$region-latest.osm.pbf"
 done
 
 # Canada
@@ -90,6 +94,8 @@ for region in "alberta" "british-columbia" "manitoba" "new-brunswick" "newfoundl
   mv "$region/data/cities" "$1/$LANG/canada/$region/data/cities"
   cd "$1/$LANG/canada/$region" && git add -A && git commit -m "update content and data" && git push origin master
   cd $DIR
+  rm -rf "$region"
+  rm "$region-latest.osm.pbf"
 done
 
 # United States
@@ -106,4 +112,6 @@ for region in "alabama" "alaska" "arizona" "arkansas" "california" "colorado" "c
   mv "$region/data/cities" "$1/$LANG/us/$region/data/cities"
   cd "$1/$LANG/us/$region" && git add -A && git commit -m "update content and data" && git push origin master
   cd $DIR
+  rm -rf "$region"
+  rm "$region-latest.osm.pbf"
 done
