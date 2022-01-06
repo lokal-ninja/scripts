@@ -28,7 +28,9 @@ done
 
 # Update theme, move all countries and commit
 for country in "austria" "switzerland"; do
-  cd "$1/$LANG/$country" && git pull origin master && git submodule update --remote --merge && git commit -am "update theme"
+  cd "$1/$LANG/$country"
+  git pull origin master
+  git submodule update --remote --merge && git commit -am "update theme"
   cd $DIR
   rm -rf "$1/$LANG/$country/content/cities"
   rm -rf "$1/$LANG/$country/content/shops"
@@ -36,7 +38,9 @@ for country in "austria" "switzerland"; do
   mv "$country/content/shops" "$1/$LANG/$country/content/shops"
   rm -rf "$1/$LANG/$country/data/cities"
   mv "$country/data/cities" "$1/$LANG/$country/data/cities"
-  cd "$1/$LANG/$country" && git add -A && git commit -m "update content and data" && git push origin master
+  cd "$1/$LANG/$country"
+  git add -A && git commit -m "update content and data"
+  git push origin master
   cd $DIR
   rm -rf "$country"
   rm "$country-latest.osm.pbf"
@@ -48,7 +52,9 @@ done
 for region in "baden-wuerttemberg" "bayern" "brandenburg" "bremen" "hamburg" "hessen" "mecklenburg-vorpommern" "niedersachsen" "nordrhein-westfalen" "rheinland-pfalz" "saarland" "sachsen-anhalt" "sachsen" "schleswig-holstein" "thueringen"; do
   wget "https://download.geofabrik.de/europe/germany/$region-latest.osm.pbf";
   ./pbf2md $region
-  cd "$1/$LANG/germany/$region" && git pull origin master && git submodule update --remote --merge && git commit -am "update theme"
+  cd "$1/$LANG/germany/$region"
+  git pull origin master
+  git submodule update --remote --merge && git commit -am "update theme"
   cd $DIR
   rm -rf "$1/$LANG/germany/$region/content/cities"
   rm -rf "$1/$LANG/germany/$region/content/shops"
@@ -56,7 +62,9 @@ for region in "baden-wuerttemberg" "bayern" "brandenburg" "bremen" "hamburg" "he
   mv "$region/content/shops" "$1/$LANG/germany/$region/content/shops"
   rm -rf "$1/$LANG/germany/$region/data/cities"
   mv "$region/data/cities" "$1/$LANG/germany/$region/data/cities"
-  cd "$1/$LANG/germany/$region" && git add -A && git commit -m "update content and data" && git push origin master
+  cd "$1/$LANG/germany/$region"
+  git add -A && git commit -m "update content and data"
+  git push origin master
   cd $DIR
   rm -rf "$region"
   rm "$region-latest.osm.pbf"

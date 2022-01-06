@@ -46,7 +46,9 @@ done
 
 # Update theme, move all countries and commit
 for country in "ghana" "kenya" "liberia" "nigeria" "sierra-leone" "south-africa" "india" "pakistan" "philippines" "australia" "new-zealand" "ireland-and-northern-ireland"; do
-  cd "$1/$LANG/$country" && git pull origin master && git submodule update --remote --merge && git commit -am "update theme"
+  cd "$1/$LANG/$country"
+  git pull origin master
+  git submodule update --remote --merge && git commit -am "update theme"
   cd $DIR
   rm -rf "$1/$LANG/$country/content/cities"
   rm -rf "$1/$LANG/$country/content/shops"
@@ -54,7 +56,9 @@ for country in "ghana" "kenya" "liberia" "nigeria" "sierra-leone" "south-africa"
   mv "$country/content/shops" "$1/$LANG/$country/content/shops"
   rm -rf "$1/$LANG/$country/data/cities"
   mv "$country/data/cities" "$1/$LANG/$country/data/cities"
-  cd "$1/$LANG/$country" && git add -A && git commit -m "update content and data" && git push origin master
+  cd "$1/$LANG/$country"
+  git add -A && git commit -m "update content and data"
+  git push origin master
   cd $DIR
   rm -rf "$country"
   rm "$country-latest.osm.pbf"
@@ -66,7 +70,9 @@ done
 for region in "england" "scotland" "wales"; do
   wget "https://download.geofabrik.de/europe/great-britain/$region-latest.osm.pbf";
   ./pbf2md $region
-  cd "$1/$LANG/great-britain/$region" && git pull origin master && git submodule update --remote --merge && git commit -am "update theme"
+  cd "$1/$LANG/great-britain/$region"
+  git pull origin master
+  git submodule update --remote --merge && git commit -am "update theme"
   cd $DIR
   rm -rf "$1/$LANG/great-britain/$region/content/cities"
   rm -rf "$1/$LANG/great-britain/$region/content/shops"
@@ -74,7 +80,9 @@ for region in "england" "scotland" "wales"; do
   mv "$region/content/shops" "$1/$LANG/great-britain/$region/content/shops"
   rm -rf "$1/$LANG/great-britain/$region/data/cities"
   mv "$region/data/cities" "$1/$LANG/great-britain/$region/data/cities"
-  cd "$1/$LANG/great-britain/$region" && git add -A && git commit -m "update content and data" && git push origin master
+  cd "$1/$LANG/great-britain/$region"
+  git add -A && git commit -m "update content and data"
+  git push origin master
   cd $DIR
   rm -rf "$region"
   rm "$region-latest.osm.pbf"
@@ -84,7 +92,9 @@ done
 for region in "alberta" "british-columbia" "manitoba" "new-brunswick" "newfoundland-and-labrador" "northwest-territories" "nova-scotia" "nunavut" "ontario" "prince-edward-island" "quebec" "saskatchewan" "yukon"; do
   wget "https://download.geofabrik.de/north-america/canada/$region-latest.osm.pbf"
   ./pbf2md $region
-    cd "$1/$LANG/canada/$region" && git pull origin master && git submodule update --remote --merge && git commit -am "update theme"
+  cd "$1/$LANG/canada/$region"
+  git pull origin master
+  git submodule update --remote --merge && git commit -am "update theme"
   cd $DIR
   rm -rf "$1/$LANG/canada/$region/content/cities"
   rm -rf "$1/$LANG/canada/$region/content/shops"
@@ -92,7 +102,9 @@ for region in "alberta" "british-columbia" "manitoba" "new-brunswick" "newfoundl
   mv "$region/content/shops" "$1/$LANG/canada/$region/content/shops"
   rm -rf "$1/$LANG/canada/$region/data/cities"
   mv "$region/data/cities" "$1/$LANG/canada/$region/data/cities"
-  cd "$1/$LANG/canada/$region" && git add -A && git commit -m "update content and data" && git push origin master
+  cd "$1/$LANG/canada/$region"
+  git add -A && git commit -m "update content and data"
+  git push origin master
   cd $DIR
   rm -rf "$region"
   rm "$region-latest.osm.pbf"
@@ -102,7 +114,9 @@ done
 for region in "alabama" "alaska" "arizona" "arkansas" "california" "colorado" "connecticut" "delaware" "district-of-columbia" "florida" "georgia" "hawaii" "idaho" "illinois" "indiana" "iowa" "kansas" "kentucky" "louisiana" "maine" "maryland" "massachusetts" "michigan" "minnesota" "mississippi" "missouri" "montana" "nebraska" "nevada" "new-hampshire" "new-jersey" "new-mexico" "new-york" "north-carolina" "north-dakota" "ohio" "oklahoma" "oregon" "pennsylvania" "puerto-rico" "rhode-island" "south-carolina" "south-dakota" "tennessee" "texas" "utah" "vermont" "virginia" "washington" "west-virginia" "wisconsin" "wyoming"; do
   wget "https://download.geofabrik.de/north-america/us/$region-latest.osm.pbf"
   ./pbf2md $region
-  cd "$1/$LANG/us/$region" && git pull origin master && git submodule update --remote --merge && git commit -am "update theme"
+  cd "$1/$LANG/us/$region"
+  git pull origin master
+  git submodule update --remote --merge && git commit -am "update theme"
   cd $DIR
   rm -rf "$1/$LANG/us/$region/content/cities"
   rm -rf "$1/$LANG/us/$region/content/shops"
@@ -110,7 +124,9 @@ for region in "alabama" "alaska" "arizona" "arkansas" "california" "colorado" "c
   mv "$region/content/shops" "$1/$LANG/us/$region/content/shops"
   rm -rf "$1/$LANG/us/$region/data/cities"
   mv "$region/data/cities" "$1/$LANG/us/$region/data/cities"
-  cd "$1/$LANG/us/$region" && git add -A && git commit -m "update content and data" && git push origin master
+  cd "$1/$LANG/us/$region"
+  git add -A && git commit -m "update content and data"
+  git push origin master
   cd $DIR
   rm -rf "$region"
   rm "$region-latest.osm.pbf"
