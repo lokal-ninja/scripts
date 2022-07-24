@@ -1,7 +1,7 @@
-#!/bin/sh
-# Build, move and deploy all english countries
-# Copy file to your pbf2md folder
-# Usage: ./en.sh DSTFOLDER (e.g. /countries/)
+#!/bin/bash
+
+# Fetch, build, move and deploy all english countries
+# Usage: Copy file to your pbf2md folder, then ./en.sh DSTFOLDER (e.g. /countries/)
 
 if [ $# -lt 1 ]; then
   echo 1>&2 "$0: not enough arguments"
@@ -13,6 +13,55 @@ fi
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 LANG="en"
+DST=$1
+
+update () {
+  git pull origin master
+  git submodule update --remote --merge && git commit -am "update theme"
+}
+
+push () {
+  git add -A && git commit -m "update content and data"
+  git push origin master
+}
+
+process_country () {
+  wget "https://download.geofabrik.de/$1/$2-latest.osm.pbf" || continue
+  ./pbf2md $2
+  cd "$DST/$LANG/$2"
+  update
+  cd $DIR
+  rm -rf "$DST/$LANG/$2/content/cities"
+  rm -rf "$DST/$LANG/$2/content/shops"
+  mv "$2/content/cities" "$DST/$LANG/$2/content/cities"
+  mv "$2/content/shops" "$DST/$LANG/$2/content/shops"
+  rm -rf "$DST/$LANG/$2/data/cities"
+  mv "$2/data/cities" "$DST/$LANG/$2/data/cities"
+  cd "$DST/$LANG/$2"
+  push
+  cd $DIR
+  rm -rf "$2"
+  rm "$2-latest.osm.pbf"
+}
+
+process_region () {
+  wget "https://download.geofabrik.de/$1/$2/$3-latest.osm.pbf" || continue
+  ./pbf2md $3
+  cd "$DST/$LANG/$2/$3"
+  update
+  cd $DIR
+  rm -rf "$DST/$LANG/$2/$3/content/cities"
+  rm -rf "$DST/$LANG/$2/$3/content/shops"
+  mv "$3/content/cities" "$DST/$LANG/$2/$3/content/cities"
+  mv "$3/content/shops" "$DST/$LANG/$2/$3/content/shops"
+  rm -rf "$DST/$LANG/$2/$3/data/cities"
+  mv "$3/data/cities" "$DST/$LANG/$2/$3/data/cities"
+  cd "$DST/$LANG/$2/$3"
+  push
+  cd $DIR
+  rm -rf "$3"
+  rm "$3-latest.osm.pbf"
+}
 
 # Use proper branch
 git checkout $LANG
@@ -22,112 +71,38 @@ go build
 
 # Africa
 for country in "ghana" "kenya" "liberia" "nigeria" "sierra-leone" "south-africa"; do
-  wget "https://download.geofabrik.de/africa/$country-latest.osm.pbf"
-  ./pbf2md $country
+  process_country "africa" $country
 done
 
 # Asia
 for country in "india" "pakistan" "philippines"; do
-  wget "https://download.geofabrik.de/asia/$country-latest.osm.pbf"
-  ./pbf2md $country
+  process_country "asia" $country
 done
 
 # Australia-Oceania
 for country in "australia" "new-zealand"; do
-  wget "https://download.geofabrik.de/australia-oceania/$country-latest.osm.pbf"
-  ./pbf2md $country
+  process_country "australia-oceania" $country
 done
 
 # Europe
 for country in "ireland-and-northern-ireland"; do
-  wget "https://download.geofabrik.de/europe/$country-latest.osm.pbf"
-  ./pbf2md $country
-done
-
-# Update theme, move all countries and commit
-for country in "ghana" "kenya" "liberia" "nigeria" "sierra-leone" "south-africa" "india" "pakistan" "philippines" "australia" "new-zealand" "ireland-and-northern-ireland"; do
-  cd "$1/$LANG/$country"
-  git pull origin master
-  git submodule update --remote --merge && git commit -am "update theme"
-  cd $DIR
-  rm -rf "$1/$LANG/$country/content/cities"
-  rm -rf "$1/$LANG/$country/content/shops"
-  mv "$country/content/cities" "$1/$LANG/$country/content/cities"
-  mv "$country/content/shops" "$1/$LANG/$country/content/shops"
-  rm -rf "$1/$LANG/$country/data/cities"
-  mv "$country/data/cities" "$1/$LANG/$country/data/cities"
-  cd "$1/$LANG/$country"
-  git add -A && git commit -m "update content and data"
-  git push origin master
-  cd $DIR
-  rm -rf "$country"
-  rm "$country-latest.osm.pbf"
+  process_country "europe" $country
 done
 
 # Download, build and move special country regions in
 
 # Great Britain
 for region in "england" "scotland" "wales"; do
-  wget "https://download.geofabrik.de/europe/great-britain/$region-latest.osm.pbf";
-  ./pbf2md $region
-  cd "$1/$LANG/great-britain/$region"
-  git pull origin master
-  git submodule update --remote --merge && git commit -am "update theme"
-  cd $DIR
-  rm -rf "$1/$LANG/great-britain/$region/content/cities"
-  rm -rf "$1/$LANG/great-britain/$region/content/shops"
-  mv "$region/content/cities" "$1/$LANG/great-britain/$region/content/cities"
-  mv "$region/content/shops" "$1/$LANG/great-britain/$region/content/shops"
-  rm -rf "$1/$LANG/great-britain/$region/data/cities"
-  mv "$region/data/cities" "$1/$LANG/great-britain/$region/data/cities"
-  cd "$1/$LANG/great-britain/$region"
-  git add -A && git commit -m "update content and data"
-  git push origin master
-  cd $DIR
-  rm -rf "$region"
-  rm "$region-latest.osm.pbf"
+  process_region "europe" "great-britain" $region
 done
 
 # Canada
 for region in "alberta" "british-columbia" "manitoba" "new-brunswick" "newfoundland-and-labrador" "northwest-territories" "nova-scotia" "nunavut" "ontario" "prince-edward-island" "quebec" "saskatchewan" "yukon"; do
-  wget "https://download.geofabrik.de/north-america/canada/$region-latest.osm.pbf"
-  ./pbf2md $region
-  cd "$1/$LANG/canada/$region"
-  git pull origin master
-  git submodule update --remote --merge && git commit -am "update theme"
-  cd $DIR
-  rm -rf "$1/$LANG/canada/$region/content/cities"
-  rm -rf "$1/$LANG/canada/$region/content/shops"
-  mv "$region/content/cities" "$1/$LANG/canada/$region/content/cities"
-  mv "$region/content/shops" "$1/$LANG/canada/$region/content/shops"
-  rm -rf "$1/$LANG/canada/$region/data/cities"
-  mv "$region/data/cities" "$1/$LANG/canada/$region/data/cities"
-  cd "$1/$LANG/canada/$region"
-  git add -A && git commit -m "update content and data"
-  git push origin master
-  cd $DIR
-  rm -rf "$region"
-  rm "$region-latest.osm.pbf"
+  process_region "north-america" "canada" $region
 done
 
 # United States
 for region in "alabama" "alaska" "arizona" "arkansas" "california" "colorado" "connecticut" "delaware" "district-of-columbia" "florida" "georgia" "hawaii" "idaho" "illinois" "indiana" "iowa" "kansas" "kentucky" "louisiana" "maine" "maryland" "massachusetts" "michigan" "minnesota" "mississippi" "missouri" "montana" "nebraska" "nevada" "new-hampshire" "new-jersey" "new-mexico" "new-york" "north-carolina" "north-dakota" "ohio" "oklahoma" "oregon" "pennsylvania" "puerto-rico" "rhode-island" "south-carolina" "south-dakota" "tennessee" "texas" "utah" "vermont" "virginia" "washington" "west-virginia" "wisconsin" "wyoming"; do
-  wget "https://download.geofabrik.de/north-america/us/$region-latest.osm.pbf"
-  ./pbf2md $region
-  cd "$1/$LANG/us/$region"
-  git pull origin master
-  git submodule update --remote --merge && git commit -am "update theme"
-  cd $DIR
-  rm -rf "$1/$LANG/us/$region/content/cities"
-  rm -rf "$1/$LANG/us/$region/content/shops"
-  mv "$region/content/cities" "$1/$LANG/us/$region/content/cities"
-  mv "$region/content/shops" "$1/$LANG/us/$region/content/shops"
-  rm -rf "$1/$LANG/us/$region/data/cities"
-  mv "$region/data/cities" "$1/$LANG/us/$region/data/cities"
-  cd "$1/$LANG/us/$region"
-  git add -A && git commit -m "update content and data"
-  git push origin master
-  cd $DIR
-  rm -rf "$region"
-  rm "$region-latest.osm.pbf"
+  process_region "north-america" "us" $region
 done
+
