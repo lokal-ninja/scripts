@@ -93,7 +93,7 @@ done
 
 # Great Britain
 for region in "england" "scotland" "wales"; do
-  process_region "europe" "united-britain" $region
+  process_region "europe" "united-kingdom" $region
 done
 
 # Canada
